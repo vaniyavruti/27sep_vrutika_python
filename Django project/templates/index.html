@@ -1,0 +1,505 @@
+{% load static %}
+{% load account %} 
+{% load socialaccount %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Batchproject</title>
+    <link rel="icon" type="image/x-icon" href="/static/images/favicon.png" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <!-- Navbar start-->
+
+    <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
+      <div class="container-fluid">
+        <!-- <a class="navbar-brand" href="#">NotesApp</a> -->
+        <a class="navbar-brand" href="/">
+          <img
+            src="/static/images/favicon.png"
+            width="35"
+            height="40"
+            class="d-inline-block align-text-top"
+          />
+          Batchproject
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="/profile"
+                >Profile</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="/notes"
+                >Notes</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="/about"
+                >About</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="/contact"
+                >Contact</a
+              >
+            </li>
+          </ul>
+          <form class="d-flex" role="search">
+            <input
+              class="form-control me-2"
+              type="search"
+              placeholder="Search"
+              aria-label="Search"
+            />
+            <button class="btn btn-outline-success" type="submit">
+              Search
+            </button>
+            {% if not user.is_active %}
+            <button
+              class="btn btn-outline-warning mx-2"
+              data-bs-toggle="modal"
+              data-bs-target="#loginModal"
+              type="button"
+            >
+              Login
+            </button>
+            <button
+              class="btn btn-outline-danger"
+              data-bs-toggle="modal"
+              data-bs-target="#signupModal"
+              type="button"
+            >
+              Signup
+            </button>
+            {% else %}
+            <!-- <button
+              class="btn btn-outline-danger"
+               type="button"
+            >
+              Logout
+            </button>-->
+            <div class="dropdown mx-2">
+              <a
+                class="btn btn-danger dropdown-toggle"
+                href="#"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                {{user}}
+              </a>
+
+              <ul class="dropdown-menu">
+                <li>
+                  <a class="dropdown-item" href="/profile">Update Profile</a>
+                </li>
+                <li><a class="dropdown-item" href="/userlogout">Logout</a></li>
+              </ul>
+            </div>
+            {% endif %}
+          </form>
+        </div>
+      </div>
+    </nav>
+    <!-- Navbar End-->
+
+<!--Error messages start-->
+    {% for msg in messages %}
+    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+        <strong>{{msg}}</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endfor %}
+<!--Error messages start-->
+
+    <!-- Image Slider Start -->
+    <div container="my-3">
+      <div id="carouselExampleIndicators" class="carousel slide">
+        <div class="carousel-indicators">
+          <button
+            type="button"
+            data-bs-target="#carouselExampleIndicators"
+            data-bs-slide-to="0"
+            class="active"
+            aria-current="true"
+            aria-label="Slide 1"
+          ></button>
+          <button
+            type="button"
+            data-bs-target="#carouselExampleIndicators"
+            data-bs-slide-to="1"
+            aria-label="Slide 2"
+          ></button>
+          <button
+            type="button"
+            data-bs-target="#carouselExampleIndicators"
+            data-bs-slide-to="2"
+            aria-label="Slide 3"
+          ></button>
+        </div>
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <img
+              src="/static/images/g1.jpeg"
+              height="660"
+              width="660"
+              class="d-block w-100"
+            />
+          </div>
+          <div class="carousel-item">
+            <img
+              src="/static/images/g2.jpeg"
+              height="660"
+              class="d-block w-100"
+            />
+          </div>
+          <div class="carousel-item">
+            <img
+              src="/static/images/g3.jpeg"
+              height="660"
+              class="d-block w-100"
+            />
+          </div>
+          <div class="carousel-item">
+            <img
+              src="/static/images/g4.jpeg"
+              height="660"
+              class="d-block w-100"
+            />
+          </div>
+        </div>
+        <button
+          class="carousel-control-prev"
+          type="button"
+          data-bs-target="#carouselExampleIndicators"
+          data-bs-slide="prev"
+        >
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button
+          class="carousel-control-next"
+          type="button"
+          data-bs-target="#carouselExampleIndicators"
+          data-bs-slide="next"
+        >
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+      <!-- Image Slider End -->
+
+      <!-- Login Modal Start -->
+      <div
+        class="modal fade"
+        id="loginModal"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">Login</h1>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <form method="post">
+                {% csrf_token %}
+                <div class="mb-3">
+                  <label for="exampleInputEmail1" class="form-label"
+                    >Username</label
+                  >
+                  <input
+                    type="text"
+                    name="username"
+                    class="form-control"
+                    id="exampleInputEmail1"
+                    aria-describedby="emailHelp"
+                  />
+                  <div id="emailHelp" class="form-text">
+                    We'll never share your email with anyone else.
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <label for="exampleInputPassword1" class="form-label"
+                    >Password</label
+                  >
+                  <input
+                    type="password"
+                    name="password"
+                    class="form-control"
+                    id="exampleInputPassword1"
+                  />
+                </div>
+                <div class="mb-3 form-check">
+                  <input
+                    type="checkbox"
+                    class="form-check-input"
+                    id="exampleCheck1"
+                  />
+                  <label class="form-check-label" for="exampleCheck1"
+                    >Check me out</label
+                  >
+                </div>
+                <div class="d-grid gap-2">
+                  <button
+                    type="submit"
+                    name="login"
+                    value="login"
+                    class="btn btn-primary"
+                  >
+                    Login
+                  </button>
+                  <a
+                    class="btn btn-danger"
+                    href="{% provider_login_url 'google' %}"
+                    type="button"
+                    >Login with Gmail</a
+                  >
+                  <a
+                  class="btn btn-primary"
+                  href="{% provider_login_url 'facebook' %}"
+                  type="button"
+                  >Login with Facebook</a
+                >
+                <a
+                  class="btn btn-warning"
+                  href="{% provider_login_url 'facebook' %}"
+                  type="button"
+                  >Login with instagram</a
+                >
+                <a
+                  class="btn btn-dark"
+                  href="{% provider_login_url 'facebook' %}"
+                  type="button"
+                  >Login with Github</a
+                >
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Login Modal End -->
+
+      <!-- Signup Modal Start -->
+      <div
+        class="modal fade"
+        id="signupModal"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">Signup</h1>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <form method="post" class="row g-3 needs-validation" novalidate>
+                {% csrf_token %}
+                <div class="col-md-6">
+                  <label for="validationCustom01" class="form-label"
+                    >First name</label
+                  >
+                  <input
+                    type="text"
+                    name="firstname"
+                    class="form-control"
+                    id="validationCustom01"
+                    required
+                  />
+                  <div class="valid-feedback">Looks good!</div>
+                </div>
+                <div class="col-md-6">
+                  <label for="validationCustom02" class="form-label"
+                    >Last name</label
+                  >
+                  <input
+                    type="text"
+                    name="lastname"
+                    class="form-control"
+                    id="validationCustom02"
+                    required
+                  />
+                  <div class="valid-feedback">Looks good!</div>
+                </div>
+                <div class="col-md-6">
+                  <label for="validationCustomUsername" class="form-label"
+                    >Username</label
+                  >
+                  <div class="input-group has-validation">
+                    <span class="input-group-text" id="inputGroupPrepend"
+                      >@</span
+                    >
+                    <input
+                      type="text"
+                      name="username"
+                      class="form-control"
+                      id="validationCustomUsername"
+                      aria-describedby="inputGroupPrepend"
+                      required
+                    />
+                    <div class="invalid-feedback">
+                      Please choose a username.
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <label for="validationCustom01" class="form-label"
+                    >Password</label
+                  >
+                  <input
+                    type="password"
+                    name="password"
+                    class="form-control"
+                    id="validationCustom01"
+                    required
+                  />
+                  <div class="valid-feedback">Looks good!</div>
+                </div>
+                <div class="col-md-6">
+                  <label for="validationCustom03" class="form-label"
+                    >City</label
+                  >
+                  <input
+                    type="text"
+                    name="city"
+                    class="form-control"
+                    id="validationCustom03"
+                    required
+                  />
+                  <div class="invalid-feedback">
+                    Please provide a valid city.
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <label for="validationCustom04" class="form-label"
+                    >State</label
+                  >
+                  <select
+                    class="form-select"
+                    name="state"
+                    id="validationCustom04"
+                    required
+                  >
+                    <option selected disabled value="">Choose...</option>
+                    <option>Gujarat</option>
+                    <option>Delhi</option>
+                    <option>Punjab</option>
+                    <option>Goa</option>
+                    <option>Other</option>
+                  </select>
+                  <div class="invalid-feedback">
+                    Please select a valid state.
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <label for="validationCustom05" class="form-label"
+                    >Mobile</label
+                  >
+                  <input
+                    type="number"
+                    name="mobile"
+                    class="form-control"
+                    id="validationCustom05"
+                    required
+                  />
+                  <div class="invalid-feedback">
+                    Please provide a valid zip.
+                  </div>
+                </div>
+                <div class="col-12">
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      value=""
+                      id="invalidCheck"
+                      required
+                    />
+                    <label class="form-check-label" for="invalidCheck">
+                      Agree to terms and conditions
+                    </label>
+                    <div class="invalid-feedback">
+                      You must agree before submitting.
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <button
+                    class="btn btn-primary"
+                    name="signup"
+                    value="signup"
+                    type="submit"
+                  >
+                    Signup
+                  </button>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Signup Modal End -->
+    </div>
+  </body>
+</html>
